@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracker</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Full viewport height */
+            background-color: rgba(0, 0, 0, 0.2);
+            margin: 0;
+        }
+        .container {
+            margin-left: 50px;
+            flex: 1; /* Allow the container to grow */
+        }
+        .container li {
+            font-size: 12px;
+            margin-top: 20px;
+            list-style-type: none;
+        }
+        .container li:hover {
+            font-size: 20px;
+        }
+        .container a {
+            text-decoration: none;
+            color: blue; 
+        }
+        p {
+            font-size: 25px;
+        }
+        .tick {
+            width: 20px;
+            height: 20px;
+            position: relative;
+            display: inline-block; 
+        }
+        .tick::before,
+        .tick::after {
+            content: '';
+            position: absolute;
+            width: 3px; 
+            background-color: green; 
+            border-radius: 1px;
+        }
+        .tick::before {
+            height: 10px;
+            transform: rotate(45deg);
+            top: 3px;
+            left: 8px;
+        }
+        .tick::after {
+            height: 18px;
+            transform: rotate(-45deg);
+            top: -1px;
+            left: 11px;
+        }
+        .add_list {
+            font-size: 30px;
+            border-radius: 50px;
+            margin-top: 60px;
+            display: inline-block; 
+            padding: 10px 20px; 
+            background-color: #f0f0f0; 
+            border: 1px solid #ccc;
+        }
+        .add_list:hover {
+            color: green;
+            background-color: #e0e0e0; 
+        }
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background: #ddd;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        .logout {
+            color: blue;
+            margin-top: 20px;
+            font-size:40px
+            text-decoration: none;
+            margin-bottom: 20px;
+            margin-left: 20px;
+            
+        }
+        .logout:hover {
+            color: darkred; 
+            font-size:30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Manage Your Tasks</h1>
+        
+        <p>Task List:</p>
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    {{ task.title }} ----- 
+                    {{ task.due_date|date:"d/m/Y" }} --- 
+                    {% if task.completed %}
+                        <strong>Completed <div class="tick"></div></strong>
+                        <form action="{% url 'delete_completed_task' task.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'complete_task' task.id %}">Complete</a>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li>No tasks available.</li>
+            {% endfor %}
+        </ul>
+        
+        <a href="{% url 'add_task' %}" class="add_list">Add New Task</a><br>
+         
+    </div>
+    <a href="{% url 'home' %}" class="logout">&lt;&lt; </a>
+    
+
+    <footer>
+        <p>&copy; {% now "Y" %} Task Tracker. All rights reserved.</p>
+    </footer>
+    
+</body>
+</html>

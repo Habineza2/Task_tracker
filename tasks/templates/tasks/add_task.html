@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Task</title>
+    <style>
+        body {
+            background-color: rgba(0, 0, 0, 0.1);
+            font-family: Arial, sans-serif;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px; /* Fixed width for the form */
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .container a {
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff; /* Bootstrap primary blue */
+        }
+        .container a:hover {
+            color: green; /* Change color on hover */
+        }
+        .container button {
+            width: 100%; /* Full-width button */
+            background-color: #28a745; /* Green color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px; /* Spacing above the button */
+        }
+        .container button:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+        form {
+            display: flex;
+            flex-direction: column; /* Arrange form elements in a column */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Task</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add Task</button>
+        </form>
+        <a href="{% url 'task_list' %}">Back to Task List</a>
+    </div>
+</body>
+</html>

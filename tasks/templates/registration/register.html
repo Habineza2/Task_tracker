@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        body {
+            background-color: rgba(0, 0, 0, 0.1);
+            font-family: "Segoe UI", Tahoma, Geneva, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding-bottom: 60px; /* Space for footer */
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+        }
+        h1 {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+        .container input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .container input:focus {
+            border-color: green;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 128, 0, 0.5);
+        }
+        .container button {
+            width: 100%;
+            padding: 10px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .container button:hover {
+            background-color: darkgreen;
+        }
+        .link {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        .link a {
+            color: blue;
+            text-decoration: none;
+        }
+        .link a:hover {
+            text-decoration: underline;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            color: #555;
+            background-color: rgba(255, 255, 255, 0.9);
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Registration</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.username.label_tag }}
+            <input type="text" name="username" placeholder="Username" required>
+            {% for error in form.username.errors %}
+                <div class="error">{{ error }}</div>
+            {% endfor %}
+
+            {{ form.email.label_tag }}
+            <input type="email" name="email" placeholder="Email" required>
+            {% for error in form.email.errors %}
+                <div class="error">{{ error }}</div>
+            {% endfor %}
+
+            {{ form.password1.label_tag }}
+            <input type="password" name="password1" placeholder="Password" required>
+            {% for error in form.password1.errors %}
+                <div class="error">{{ error }}</div>
+            {% endfor %}
+
+            {{ form.password2.label_tag }}
+            <input type="password" name="password2" placeholder="Confirm Password" required>
+            {% for error in form.password2.errors %}
+                <div class="error">{{ error }}</div>
+            {% endfor %}
+
+            <button type="submit">Register</button>
+        </form>
+        <p class="link">Already have an account? <a href="{% url 'login' %}">Login here</a>.</p>
+    </div>
+
+    <footer>
+        <p>&copy; {% now "Y" %} Your Company Name. All rights reserved.</p>
+    </footer>
+</body>
+</html>
